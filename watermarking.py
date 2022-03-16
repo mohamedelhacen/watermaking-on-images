@@ -6,6 +6,9 @@ watermark_path = input("Enter the path to the watermark: ")
 image = cv2.imread(image_path)
 watermark = cv2.imread(watermark_path)
 
+image_width, image_height = image.shape[0], image.shape[1]
+watermark = cv2.resize(watermark, (int(image_width/10), int(image_height/10)))
+
 rows, cols = watermark.shape[0], watermark.shape[1]
 roi = image[0:rows, 0:cols]
 
