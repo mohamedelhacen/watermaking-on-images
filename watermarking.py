@@ -10,7 +10,7 @@ image_width, image_height = image.shape[0], image.shape[1]
 watermark = cv2.resize(watermark, (int(image_width/10), int(image_height/10)))
 
 rows, cols = watermark.shape[0], watermark.shape[1]
-roi = image[0:rows, 0:cols]
+roi = image[image_width - rows:image_width, image_height - cols:image_height]
 
 watermark_gray = cv2.cvtColor(watermark, cv2.COLOR_BGR2GRAY)
 ret, mask = cv2.threshold(watermark_gray, 10, 255, cv2.THRESH_BINARY)
@@ -20,7 +20,7 @@ bg = cv2.bitwise_and(roi, roi, mask=mask_inv)
 fg = cv2.bitwise_and(watermark, watermark, mask=mask)
 
 dst = cv2.add(fg, bg)
-image[0:rows, 0:cols] = dst
+image[image_width - rows:image_width, image_height - cols:image_height] = dst
 
 cv2.imshow("Watermarked", image)
 if cv2.waitKey() & ord('s'):
